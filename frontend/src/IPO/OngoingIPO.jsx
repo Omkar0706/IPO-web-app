@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const UpcomingIPO = () => {
+const OngoingIPO = () => {
+  // eslint-disable-next-line no-unused-vars
   const [visibleCards, setVisibleCards] = useState(3);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const upcomingIPOs = [
+  const ongoingIPOs = [
     {
       name: "New Agritech Ltd.",
       logo: "",
@@ -17,46 +18,6 @@ const UpcomingIPO = () => {
       issueType: "Book Built",
       listingDate: "2024-01-30",
       rhp: "DRHP",
-    },
-    {
-      name: "EPACK Durable Ltd.",
-      logo: "",
-      priceBand: "₹28 - 230",
-      open: "2024-01-19",
-      close: "2024-01-23",
-      issueSize: "640.05 Cr.",
-      issueType: "Book Built",
-      listingDate: "2024-01-29",
-    },
-    {
-      name: "R K SWAMP RK Swarmy Ltd.",
-      logo: "",
-      priceBand: "Not Issued",
-      open: "Not Issued",
-      close: "Not Issued",
-      issueSize: "Not Issued",
-      issueType: "Book Built",
-      listingDate: "Not Issued"
-    },
-    {
-      name: "Tech Innovations Ltd.",
-      logo: "",
-      priceBand: "₹50 - 55",
-      open: "2024-02-01",
-      close: "2024-02-05",
-      issueSize: "200.00 Cr.",
-      issueType: "Book Built",
-      listingDate: "2024-02-12"
-    },
-    {
-      name: "Green Energy Solutions",
-      logo: "",
-      priceBand: "₹75 - 80",
-      open: "2024-02-10",
-      close: "2024-02-14",
-      issueSize: "350.50 Cr.",
-      issueType: "Book Built",
-      listingDate: "2024-02-21"
     }
   ];
 
@@ -65,17 +26,17 @@ const UpcomingIPO = () => {
   };
 
   const scrollRight = () => {
-    setCurrentIndex(prev => Math.min(upcomingIPOs.length - visibleCards, prev + 1));
+    setCurrentIndex(prev => Math.min(ongoingIPOs.length - visibleCards, prev + 1));
   };
 
-  const visibleIPOs = upcomingIPOs.slice(currentIndex, currentIndex + visibleCards);
+  const visibleIPOs = ongoingIPOs.slice(currentIndex, currentIndex + visibleCards);
 
   return (
     <div className="relative">
-      <div className='flex items-start justify-between mb-6'>
+      <div className='flex items-center justify-between mb-6'>
         <div>
-          <h1 className='text-2xl font-bold'>Upcoming</h1>
-          <h1 className='font-thin text-xs text-gray-600'>Companies that have filed for an IPO with SEBI. Few details might be disclosed by the companies later on.</h1>
+          <h1 className='text-2xl font-bold'>Ongoing</h1>
+          <h1 className='font-thin text-sm text-gray-600'>Companies where the IPO investment process is started and will be listed soon in the stock market for regular trading.</h1>
         </div>
         <div className='bg-[#3f52ff] hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm'>
           <NavLink to="/allIPO">View All</NavLink>
@@ -96,16 +57,16 @@ const UpcomingIPO = () => {
           {visibleIPOs.map((ipo, index) => (
             <div 
               key={index} 
-              className="border-white bg-white rounded-lg p-4 shadow-md flex-1 min-w-[300px] mx-2"
+              className="border-white bg-white rounded-lg p-4 shadow-md flex-1 max-w-[450px] max-h-[450px] mx-5"
             >
               <div className="flex justify-between items-start">
                 <div className="w-full">
                   <div className="flex items-center gap-2">
-                      <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+                      <img src={ipo.logo} alt={`logo`} className="w-auto h-auto bg-cover bg-center bg-gray-200" />
                       <h2 className="font-bold text-lg text-[#467CFF]">{ipo.name}</h2>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-4 mt-6">
+                  <div className="flex justify-around items-center gap-3 mt-6">
                     <div>
                       <p className="text-xs text-gray-500">PRICE BAND</p>
                       <p className="font-medium">{ipo.priceBand}</p>
@@ -118,13 +79,13 @@ const UpcomingIPO = () => {
                       <p className="text-xs text-gray-500">CLOSE</p>
                       <p className="font-medium">{ipo.close}</p>
                     </div>
+                  </div>
+                  
+                  <div className="flex justify-around items-center gap-3 mt-6">
                     <div>
                       <p className="text-xs text-gray-500">ISSUE SIZE</p>
                       <p className="font-medium">{ipo.issueSize}</p>
                     </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4 mt-6">
                     <div>
                       <p className="text-xs text-gray-500">ISSUE TYPE</p>
                       <p className="font-medium">{ipo.issueType}</p>
@@ -135,7 +96,7 @@ const UpcomingIPO = () => {
                     </div>
                   </div>
 
-                  <div className='flex gap-3 mt-6'>
+                  <div className='flex gap-6 mt-6'>
                       <NavLink to='/RHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">RHP</NavLink>
                       <NavLink to='/DRHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">DRHP</NavLink>
                     </div>
@@ -145,7 +106,7 @@ const UpcomingIPO = () => {
           ))}
         </div>
         
-        {currentIndex < upcomingIPOs.length - visibleCards && (
+        {currentIndex < ongoingIPOs.length - visibleCards && (
           <button 
             onClick={scrollRight}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10"
@@ -158,4 +119,5 @@ const UpcomingIPO = () => {
   );
 };
 
-export default UpcomingIPO;
+export default OngoingIPO;
+
