@@ -21,7 +21,7 @@ const UpcomingIPO = () => {
     },
     {
       name: "EPACK Durable Ltd.",
-      logo: "",
+      logo: "/EPACK_LTD.jpeg",
       priceBand: "₹28 - 230",
       open: "2024-01-19",
       close: "2024-01-23",
@@ -31,7 +31,7 @@ const UpcomingIPO = () => {
     },
     {
       name: "R K SWAMP RK Swarmy Ltd.",
-      logo: "",
+      logo: "/RKSWAMY.jpeg",
       priceBand: "Not Issued",
       open: "Not Issued",
       close: "Not Issued",
@@ -41,7 +41,7 @@ const UpcomingIPO = () => {
     },
     {
       name: "Tech Innovations Ltd.",
-      logo: "",
+      logo: "/TechInnov.png",
       priceBand: "₹50 - 55",
       open: "2024-02-01",
       close: "2024-02-05",
@@ -51,7 +51,7 @@ const UpcomingIPO = () => {
     },
     {
       name: "Green Energy Solutions",
-      logo: "",
+      logo: "/GreenEnergy.png",
       priceBand: "₹75 - 80",
       open: "2024-02-10",
       close: "2024-02-14",
