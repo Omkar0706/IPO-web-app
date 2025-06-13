@@ -9,13 +9,8 @@ const NewListedIPO = () => {
 
   const newlistedIPOs = [
     {
-<<<<<<< HEAD
       name: "Nova Agritech Ltd.",
       logo: "/nova_agritech.png",
-=======
-      name: "New Agritech Ltd.",
-      logo: "",
->>>>>>> 9029c54c56035e00e62cc98d9c17aa489349e5ac
       priceBand: "₹39 - 41",
       open: "2024-01-22",
       close: "2024-01-24",
@@ -87,42 +82,26 @@ const NewListedIPO = () => {
           <NavLink to="/allIPO">View All</NavLink>
         </div>
       </div>
-<<<<<<< HEAD
 
       <div className="relative ">
         {currentIndex > 0 && (
           <button
-=======
-      
-      <div className="relative ">
-        {currentIndex > 0 && (
-          <button 
->>>>>>> 9029c54c56035e00e62cc98d9c17aa489349e5ac
             onClick={scrollLeft}
             className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10"
           >
             <FaChevronLeft className="text-[#3f52ff]" />
           </button>
         )}
-<<<<<<< HEAD
 
         <div className="flex justify-between items-center mb-4 overflow-hidden">
           {visibleIPOs.map((ipo, index) => (
             <div
               key={index}
-=======
-        
-        <div className="flex justify-between items-center mb-4 overflow-hidden">
-          {visibleIPOs.map((ipo, index) => (
-            <div 
-              key={index} 
->>>>>>> 9029c54c56035e00e62cc98d9c17aa489349e5ac
               className="max-w-[450px] border-white bg-white rounded-lg p-4 shadow-md flex-1 mx-5"
             >
               <div className="flex justify-between items-start">
                 <div className="w-full">
                   <div className="flex items-center gap-2">
-<<<<<<< HEAD
                     {ipo.logo ? (
                       <img
                         src={ipo.logo}
@@ -134,12 +113,6 @@ const NewListedIPO = () => {
                     )}                      <h2 className="font-bold text-lg text-[#467CFF]">{ipo.name}</h2>
                   </div>
 
-=======
-                      <img src={ipo.logo} alt={`logo`} className="w-auto h-auto bg-cover bg-center bg-gray-200" />
-                      <h2 className="font-bold text-lg text-[#467CFF]">{ipo.name}</h2>
-                  </div>
-                  
->>>>>>> 9029c54c56035e00e62cc98d9c17aa489349e5ac
                   <div className="flex justify-around items-center gap-3 mt-6">
                     <div>
                       <p className="text-xs text-gray-500">IPO PRICE</p>
@@ -154,11 +127,6 @@ const NewListedIPO = () => {
                       <p className="font-medium">{ipo.close}</p>
                     </div>
                   </div>
-<<<<<<< HEAD
-
-=======
-                  
->>>>>>> 9029c54c56035e00e62cc98d9c17aa489349e5ac
                   <div className="flex justify-around items-center gap-3 mt-6">
                     <div>
                       <p className="text-xs text-gray-500">LISTING DATE</p>
@@ -175,29 +143,17 @@ const NewListedIPO = () => {
                   </div>
 
                   <div className='flex gap-6 mt-6'>
-<<<<<<< HEAD
                     <NavLink to='/RHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">RHP</NavLink>
                     <NavLink to='/DRHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">DRHP</NavLink>
                   </div>
-=======
-                      <NavLink to='/RHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">RHP</NavLink>
-                      <NavLink to='/DRHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">DRHP</NavLink>
-                    </div>
->>>>>>> 9029c54c56035e00e62cc98d9c17aa489349e5ac
                 </div>
               </div>
             </div>
           ))}
         </div>
-<<<<<<< HEAD
 
         {currentIndex < newlistedIPOs.length - visibleCards && (
           <button
-=======
-        
-        {currentIndex < newlistedIPOs.length - visibleCards && (
-          <button 
->>>>>>> 9029c54c56035e00e62cc98d9c17aa489349e5ac
             onClick={scrollRight}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10"
           >
