@@ -5,9 +5,14 @@ import { Link } from 'react-router-dom'
 const Navbar = () => {
   return (
     <div className='flex justify-between items-center p-4 w-full h-auto bg-white border-b border-gray-200'>
-      <div className='text-2xl font-bold'>
-        <i></i> BLUESTOCK
-      </div>
+     <div className='flex items-center gap-2 text-2xl font-bold'>
+  <img
+    src="/logo.png"
+    alt="Bluestock Logo"
+     className="h-7 w-auto object-contain ml-10"
+  />
+  </div>
+
       
       <div className='flex gap-6 uppercase text-sm font-medium'>
         <Link to="/ipo" className='text-gray-400 hover:text-blue-600'>ipo</Link>

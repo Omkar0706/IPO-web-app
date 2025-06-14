@@ -9,7 +9,7 @@ const OngoingIPO = () => {
 
   const ongoingIPOs = [
     {
-      name: "New Agritech Ltd.",
+      name: "Nova Agritech Ltd.",
       logo: "",
       priceBand: "₹39 - 41",
       open: "2024-01-22",
@@ -62,7 +62,15 @@ const OngoingIPO = () => {
               <div className="flex justify-between items-start">
                 <div className="w-full">
                   <div className="flex items-center gap-2">
-                      <img src={ipo.logo} alt={`logo`} className="w-auto h-auto bg-cover bg-center bg-gray-200" />
+                      {ipo.logo ? (
+                      <img
+                        src={ipo.logo}
+                        alt="IPO logo"
+                        className="w-12 h-10 object-contain"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-gray-200 rounded"></div>
+                    )}                     
                       <h2 className="font-bold text-lg text-[#467CFF]">{ipo.name}</h2>
                   </div>
                   

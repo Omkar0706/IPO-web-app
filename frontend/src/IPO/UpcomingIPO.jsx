@@ -9,8 +9,8 @@ const UpcomingIPO = () => {
 
   const upcomingIPOs = [
     {
-      name: "New Agritech Ltd.",
-      logo: "",
+      name: "Nova Agritech Ltd.",
+      logo: "/nova_agritech.png",
       priceBand: "₹39 - 41",
       open: "2024-01-22",
       close: "2024-01-24",
@@ -21,7 +21,7 @@ const UpcomingIPO = () => {
     },
     {
       name: "EPACK Durable Ltd.",
-      logo: "",
+      logo: "/EPACK_LTD.jpeg",
       priceBand: "₹28 - 230",
       open: "2024-01-19",
       close: "2024-01-23",
@@ -31,7 +31,7 @@ const UpcomingIPO = () => {
     },
     {
       name: "R K SWAMP RK Swarmy Ltd.",
-      logo: "",
+      logo: "/RKSWAMY.jpeg",
       priceBand: "Not Issued",
       open: "Not Issued",
       close: "Not Issued",
@@ -41,7 +41,7 @@ const UpcomingIPO = () => {
     },
     {
       name: "Tech Innovations Ltd.",
-      logo: "",
+      logo: "/TechInnov.png",
       priceBand: "₹50 - 55",
       open: "2024-02-01",
       close: "2024-02-05",
@@ -51,7 +51,7 @@ const UpcomingIPO = () => {
     },
     {
       name: "Green Energy Solutions",
-      logo: "",
+      logo: "/GreenEnergy.png",
       priceBand: "₹75 - 80",
       open: "2024-02-10",
       close: "2024-02-14",
@@ -102,7 +102,15 @@ const UpcomingIPO = () => {
               <div className="flex justify-between items-start">
                 <div className="w-full">
                   <div className="flex items-center gap-2">
-                      <img src={ipo.logo} alt={`logo`} className="w-auto h-auto bg-cover bg-center bg-gray-200" />
+                      {ipo.logo ? (
+                      <img
+                        src={ipo.logo}
+                        alt="IPO logo"
+                        className="w-12 h-10 object-contain"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-gray-200 rounded"></div>
+                    )}
                       <h2 className="font-bold text-lg text-[#467CFF]">{ipo.name}</h2>
                   </div>
                   

@@ -9,8 +9,8 @@ const NewListedIPO = () => {
 
   const newlistedIPOs = [
     {
-      name: "New Agritech Ltd.",
-      logo: "",
+      name: "Nova Agritech Ltd.",
+      logo: "/nova_agritech.png",
       priceBand: "₹39 - 41",
       open: "2024-01-22",
       close: "2024-01-24",
@@ -21,7 +21,7 @@ const NewListedIPO = () => {
     },
     {
       name: "EPACK Durable Ltd.",
-      logo: "",
+      logo: "/EPACK_LTD.jpeg",
       priceBand: "₹28 - 230",
       open: "2024-01-19",
       close: "2024-01-23",
@@ -31,7 +31,7 @@ const NewListedIPO = () => {
     },
     {
       name: "R K SWAMP RK Swarmy Ltd.",
-      logo: "",
+      logo: "/RKSWAMY.jpeg",
       priceBand: "Not Issued",
       open: "Not Issued",
       close: "Not Issued",
@@ -41,7 +41,7 @@ const NewListedIPO = () => {
     },
     {
       name: "Tech Innovations Ltd.",
-      logo: "",
+      logo: "/TechInnov.png",
       priceBand: "₹50 - 55",
       open: "2024-02-01",
       close: "2024-02-05",
@@ -51,7 +51,7 @@ const NewListedIPO = () => {
     },
     {
       name: "Green Energy Solutions",
-      logo: "",
+      logo: "/GreenEnergy.png",
       priceBand: "₹75 - 80",
       open: "2024-02-10",
       close: "2024-02-14",
@@ -82,17 +82,17 @@ const NewListedIPO = () => {
           <NavLink to="/allIPO">View All</NavLink>
         </div>
       </div>
-      
+
       <div className="relative ">
         {currentIndex > 0 && (
-          <button 
+          <button
             onClick={scrollLeft}
             className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10"
           >
             <FaChevronLeft className="text-[#3f52ff]" />
           </button>
         )}
-        
+
         <div className="flex justify-between items-center mb-4 overflow-hidden">
           {visibleIPOs.map((ipo, index) => (
             <div 
@@ -102,10 +102,17 @@ const NewListedIPO = () => {
               <div className="flex justify-between items-start">
                 <div className="w-full">
                   <div className="flex items-center gap-2">
-                      <img src={ipo.logo} alt={`logo`} className="w-auto h-auto bg-cover bg-center bg-gray-200" />
-                      <h2 className="font-bold text-lg text-[#467CFF]">{ipo.name}</h2>
+                    {ipo.logo ? (
+                      <img
+                        src={ipo.logo}
+                        alt="IPO logo"
+                        className="w-12 h-10 object-contain"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-gray-200 rounded"></div>
+                    )}                      <h2 className="font-bold text-lg text-[#467CFF]">{ipo.name}</h2>
                   </div>
-                  
+
                   <div className="flex justify-around items-center gap-3 mt-6">
                     <div>
                       <p className="text-xs text-gray-500">IPO PRICE</p>
@@ -120,7 +127,6 @@ const NewListedIPO = () => {
                       <p className="font-medium">{ipo.close}</p>
                     </div>
                   </div>
-                  
                   <div className="flex justify-around items-center gap-3 mt-6">
                     <div>
                       <p className="text-xs text-gray-500">LISTING DATE</p>
@@ -137,17 +143,17 @@ const NewListedIPO = () => {
                   </div>
 
                   <div className='flex gap-6 mt-6'>
-                      <NavLink to='/RHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">RHP</NavLink>
-                      <NavLink to='/DRHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">DRHP</NavLink>
-                    </div>
+                    <NavLink to='/RHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">RHP</NavLink>
+                    <NavLink to='/DRHP' className="bg-[#E1EFFF] py-2 px-5 rounded text-sm">DRHP</NavLink>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        
+
         {currentIndex < newlistedIPOs.length - visibleCards && (
-          <button 
+          <button
             onClick={scrollRight}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10"
           >
