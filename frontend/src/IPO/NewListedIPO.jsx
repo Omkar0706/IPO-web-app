@@ -79,7 +79,7 @@ const NewListedIPO = () => {
           <h1 className='font-thin text-sm text-gray-600'>Companies that have been listed recently through an IPO. Find their listing gains and returns here.</h1>
         </div>
         <div className='bg-[#3f52ff] hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm'>
-          <NavLink to="/allIPO">View All</NavLink>
+          <NavLink to="/newlisted-IPO">View All</NavLink>
         </div>
       </div>
 

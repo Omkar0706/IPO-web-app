@@ -1,24 +1,24 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import { GoArrowUpRight } from "react-icons/go";   icon does't load properly, so not using it for now
+import { GoArrowUpRight } from "react-icons/go";   //icon does't load properly, so not using it for now
 
 const Navbar = () => {
   return (
     <div className='flex justify-between items-center p-4 w-full h-auto bg-white border-b border-gray-200'>
      <div className='flex items-center gap-2 text-2xl font-bold'>
-  <img
-    src="/logo.png"
-    alt="Bluestock Logo"
-     className="h-7 w-auto object-contain ml-10"
-  />
-  </div>
+        <img
+          src="/logo.png"
+          alt="Bluestock Logo"
+          className="h-7 w-auto object-contain ml-10"
+        />
+      </div>
 
       
       <div className='flex gap-6 uppercase text-sm font-medium'>
         <Link to="/ipo" className='text-gray-400 hover:text-blue-600'>ipo</Link>
         <Link to="/community" className='text-gray-400 hover:text-blue-600'>community</Link>
         <Link to="/products" className='text-gray-400 hover:text-blue-600'>products</Link>
-        <Link to="/brokers" className='text-gray-400 hover:text-blue-600 flex gap-0.5'>brokers{/* <GoArrowUpRight /> */}</Link>
+        <Link to="/brokers" className='text-gray-400 hover:text-blue-600 flex gap-0.5'>brokers{ <GoArrowUpRight /> }</Link>
         <Link to="/livenews" className='text-gray-400 hover:text-blue-600 flex gap-0.5'>live news<div className='text-xs bg-[#3f52ff] text-white px-2 py-0.5 rounded -translate-y-1.5'>new</div></Link>
       </div>
       

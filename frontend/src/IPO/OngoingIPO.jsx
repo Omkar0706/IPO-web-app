@@ -39,7 +39,7 @@ const OngoingIPO = () => {
           <h1 className='font-thin text-sm text-gray-600'>Companies where the IPO investment process is started and will be listed soon in the stock market for regular trading.</h1>
         </div>
         <div className='bg-[#3f52ff] hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm'>
-          <NavLink to="/allIPO">View All</NavLink>
+          <NavLink to="/ongoing-IPO">View All</NavLink>
         </div>
       </div>
       
