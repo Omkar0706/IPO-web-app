@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const DematCard = () => {
   return (
-    <div className='bg-white shadow-md rounded-lg p-6 w-1/2 translate-x-1/2 py-14'>
+    <div className='bg-white shadow-md rounded-lg p-6 w-1/2 translate-x-1/2 mt-14 py-14'>
         <div className='flex items-center justify-center'>
             <img src="" alt="logo" />
             <h1 className='text-3xl uppercase font-bold'>bluestock</h1>

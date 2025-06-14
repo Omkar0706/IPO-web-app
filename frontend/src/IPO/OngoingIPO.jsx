@@ -32,7 +32,7 @@ const OngoingIPO = () => {
   const visibleIPOs = ongoingIPOs.slice(currentIndex, currentIndex + visibleCards);
 
   return (
-    <div className="relative">
+    <div className="relative mt-14">
       <div className='flex items-center justify-between mb-6'>
         <div>
           <h1 className='text-2xl font-bold'>Ongoing</h1>
@@ -57,7 +57,7 @@ const OngoingIPO = () => {
           {visibleIPOs.map((ipo, index) => (
             <div 
               key={index} 
-              className="border-white bg-white rounded-lg p-4 shadow-md flex-1 max-w-[450px] max-h-[450px] mx-5"
+              className="border-white bg-white rounded-lg p-4 shadow-md flex-1 max-w-[30%]  mx-5"
             >
               <div className="flex justify-between items-start">
                 <div className="w-full">
