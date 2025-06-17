@@ -115,9 +115,9 @@ const AllUpcomingIPO = () => {
       <div className='px-4 md:px-10 py-6'>
         {/* Breadcrumb */}
         <div className='flex flex-wrap gap-2 my-3 text-sm'>
-          <NavLink to="/" className='text-[#0000ff] hover:underline'>Bluestock</NavLink>
+          <h1 className='text-[#0000ff] hover:underline'>Bluestock</h1>
           <span>{'>'}</span>
-          <NavLink to="/ipo" className='text-[#0000ff] hover:underline'>IPO</NavLink>
+          <NavLink to="/" className='text-[#0000ff] hover:underline'>IPO</NavLink>
           <span>{'>'}</span>
           <span className='font-medium text-gray-600'>UPCOMING IPO</span>
         </div>
