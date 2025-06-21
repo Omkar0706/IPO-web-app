@@ -1,44 +1,89 @@
 import React from 'react';
-import { FiSearch, FiUser, FiBell } from 'react-icons/fi';
+import { NavLink } from 'react-router-dom';
 
 const AdminNavbar = () => {
   return (
     <>
-      <div className='flex justify-between items-center h-15'>
-            <div className='bg-[#f1f2f7] w-[15%] h-full py-4 text-center'>
-                <h1 className='text-[#5a67ba] text-xl font-bold '>Bluestock Fintech</h1>
+      <div className='w-[16%] bg-[#f1f2f7] h-screen'>
+        <div className='h-16 py-4 text-center'>
+            <h1 className='text-[#5a67ba] text-xl font-bold '>Bluestock Fintech</h1>
+        </div>
+
+        <div className='w-full bg-[#c8cbd9] h-px'></div>
+
+        <div className="flex-col">
+        {/* Sidebar */}
+            <div className="bg-[#f1f2f7] p-4">
+                <div className="mb-8">
+                    <div className="text-gray-500 uppercase text-xs font-semibold mb-2">Menu</div>
+                    <nav className="space-y-1">
+                    <NavLink 
+                        to={'/admin/dashboard'} 
+                        className="block px-3 py-2 rounded text-[#787f89] hover:bg-[#e4e7f5] hover:text-[#707fdd]"
+                        activeClassName="bg-[#e0e1e6] font-medium"
+                    >
+                        Dashboard
+                    </NavLink>
+                    <NavLink 
+                        to={'/admin/Manage_IPO'} 
+                        className="block px-3 py-2 rounded text-[#787f89] hover:bg-[#e4e7f5] hover:text-[#707fdd]"
+                        activeClassName="bg-[#e0e1e6] font-medium"
+                    >
+                        Manage IPO
+                    </NavLink>
+                    <NavLink 
+                        to={'/admin/IPO_Subscription'} 
+                        className="block px-3 py-2 rounded text-[#787f89] hover:bg-[#e4e7f5] hover:text-[#707fdd]"
+                        activeClassName="bg-[#e0e1e6] font-medium"
+                    >
+                        IPO subscription
+                    </NavLink>
+                    <NavLink 
+                        to={'/admin/IPO_Allotment'} 
+                        className="block px-3 py-2 rounded text-[#787f89] hover:bg-[#e4e7f5] hover:text-[#707fdd]"
+                        activeClassName="bg-[#e0e1e6] font-medium"
+                    >
+                        IPO Allotment
+                    </NavLink>
+                    </nav>
+                </div>
+            
+            <div>
+                <div className="text-gray-500 uppercase text-xs font-semibold mb-2">Other</div>
+                <nav className="space-y-1">
+                <NavLink 
+                    to={'/admin/setting'} 
+                    className="block px-3 py-2 rounded text-[#787f89] hover:bg-[#e4e7f5] hover:text-[#707fdd]"
+                    activeClassName="bg-[#e0e1e6] font-medium"
+                >
+                    Setting
+                </NavLink>
+                <NavLink 
+                    to={'/admin/api-manager'} 
+                    className="block px-3 py-2 rounded text-[#787f89] hover:bg-[#e4e7f5] hover:text-[#707fdd]"
+                    activeClassName="bg-[#e0e1e6] font-medium"
+                >
+                    API Manager
+                </NavLink>
+                <NavLink 
+                    to={'/admin/account'} 
+                    className="block px-3 py-2 rounded text-[#787f89] hover:bg-[#e4e7f5] hover:text-[#707fdd]"
+                    activeClassName="bg-[#e0e1e6] font-medium"
+                >
+                    Account
+                </NavLink>
+                <NavLink 
+                    to={'/admin/help'} 
+                    className="block px-3 py-2 rounded text-[#787f89] hover:bg-[#e4e7f5] hover:text-[#707fdd]"
+                    activeClassName="bg-[#e0e1e6] font-medium"
+                >
+                    Help
+                </NavLink>
+                </nav>
             </div>
-
-            <div className='flex-1 mx-8 relative'>
-                <input 
-                    type="text" 
-                    placeholder='Search' 
-                    className='w-full max-w-lvh px-10 py-2 bg-[#f1f2f7] rounded'
-                />
-                <div className='absolute left-3 top-2.5 text-[#b6bec7]'>
-                    <FiSearch className="h-5 w-5" />
-                </div>
-            </div>
-
-            <div className='flex items-center space-x-6 px-4'>
-                <div className='flex items-center space-x-2'>
-                    <div className='rounded-full h-8 w-8 bg-gray-300 flex items-center justify-center overflow-hidden'>
-                        {/* Replace with actual user image */}
-                        <FiUser className="h-5 w-5 text-gray-500" />
-                    </div>
-                    <span className='text-gray-700'>Hi, Username</span>
-                </div>
-
-                <div className='relative'>
-                    {/* Notification icon with badge */}
-                    <button className='text-gray-600 hover:text-[#5a67ba]'>
-                        <FiBell className="h-6 w-6" />
-                        <span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center'>3</span>
-                    </button>
-                </div>
             </div>
         </div>
-        <div className='w-full bg-[#c8cbd9] h-[1.5px]'></div>
+      </div>
     </>
   );
 };

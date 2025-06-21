@@ -1,0 +1,19 @@
+Notes from Django Model:
+
+From the model IPO in Django:
+
+Calculated fields like listing_gain and current_return are not stored in the DB, but computed in views or serializers.
+
+File fields (logo, rhp_pdf, drhp_pdf) are stored as file paths in the database (VARCHAR).
+
+
+
+---
+
+🗃 ER Diagram Summary
+
+Entity	Attributes
+
+Company	company_id (PK), company_name, company_logo
+IPO	ipo_id (PK), company_id (FK), price_band, open_date, close_date, issue_size, issue_type, listing_date, status, ipo_price, listing_price, current_market_price
+Documents	document_id (PK), ipo_id (FK), rhp_pdf, drhp_pdf

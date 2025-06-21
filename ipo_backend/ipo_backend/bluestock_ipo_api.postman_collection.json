@@ -1,0 +1,78 @@
+{
+  "info": {
+    "name": "Bluestock IPO API",
+    "_postman_id": "abc123-bluestock-ipo-api",
+    "description": "API collection for IPO listing and detail using Django REST Framework",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All IPOs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/ipo/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "ipo",
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get IPO by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/ipo/1/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "ipo",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create IPO",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"company_id\": 1,\n  \"price_band\": \"\u20b9100-\u20b9120\",\n  \"open_date\": \"2025-07-01\",\n  \"close_date\": \"2025-07-03\",\n  \"issue_size\": \"\u20b91000 Cr\",\n  \"issue_type\": \"Book Built Issue\",\n  \"listing_date\": \"2025-07-10\",\n  \"status\": \"upcoming\",\n  \"ipo_price\": 110.0\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/ipo/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "ipo"
+          ]
+        }
+      }
+    }
+  ]
+}

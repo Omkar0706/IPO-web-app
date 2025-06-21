@@ -1,0 +1,6 @@
+Migration Command
+
+After updating models, run:
+
+python manage.py makemigrations
+python manage.py migrate

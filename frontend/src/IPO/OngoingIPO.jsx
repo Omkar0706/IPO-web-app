@@ -1,41 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import axios from '../api/Axios';
 
 const OngoingIPO = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [ongoingIPOs, setOngoingIPOs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const ongoingIPOs = [
-    {
-      name: "Nova Agritech Ltd.",
-      logo: "",
-      priceBand: "₹39 - 41",
-      open: "2024-01-22",
-      close: "2024-01-24",
-      issueSize: "143.81 Cr.",
-      issueType: "Book Built",
-      listingDate: "2024-01-30",
-      rhp: "DRHP",
-    }
-  ];
-
+  // Handle responsive card count
   useEffect(() => {
     const handleResize = () => {
-      setWindowWidth(window.innerWidth);
       if (window.innerWidth < 640) {
-        setVisibleCards(1);
+        setVisibleCards(1); // Mobile
       } else if (window.innerWidth < 768) {
-        setVisibleCards(2);
+        setVisibleCards(2); // Tablet
       } else {
-        setVisibleCards(3);
+        setVisibleCards(3); // Desktop
       }
     };
 
+    handleResize();
     window.addEventListener('resize', handleResize);
-    handleResize(); // Set initial value
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Fetch IPO data from backend
+  useEffect(() => {
+    const fetchOngoingIPOs = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('/ipos/ongoing');
+        setOngoingIPOs(response.data);
+        setError(null);
+      } catch (err) {
+        console.error('Failed to fetch ongoing IPOs:', err);
+        setError('Failed to load IPO data. Please try again later.');
+        setOngoingIPOs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOngoingIPOs();
   }, []);
 
   const scrollLeft = () => {
@@ -48,6 +57,52 @@ const OngoingIPO = () => {
 
   const visibleIPOs = ongoingIPOs.slice(currentIndex, currentIndex + visibleCards);
 
+  // Format date for display
+  const formatDate = (dateString) => {
+    if (!dateString || dateString === "Not Issued") return dateString;
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-IN', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+
+  // Custom skeleton loader component
+  const SkeletonLoader = () => (
+    <div className="border border-gray-100 bg-white rounded-lg p-4 shadow-sm w-full animate-pulse">
+      <div className="flex flex-col h-full">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-10 bg-gray-200 rounded"></div>
+          <div className="h-5 bg-gray-200 rounded w-3/4"></div>
+        </div>
+        
+        <div className="grid grid-cols-3 gap-2 mb-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i}>
+              <div className="h-3 bg-gray-200 rounded w-3/4 mb-1"></div>
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="grid grid-cols-3 gap-2 mb-6">
+          {[...Array(3)].map((_, i) => (
+            <div key={i}>
+              <div className="h-3 bg-gray-200 rounded w-3/4 mb-1"></div>
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+          ))}
+        </div>
+
+        <div className='flex gap-2 mt-auto'>
+          <div className="bg-gray-200 py-2 px-4 rounded w-full h-8"></div>
+          <div className="bg-gray-200 py-2 px-4 rounded w-full h-8"></div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="relative mt-14 px-4 sm:px-6 lg:px-8">
       <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4'>
@@ -57,95 +112,120 @@ const OngoingIPO = () => {
             Companies where the IPO investment process is started and will be listed soon in the stock market for regular trading.
           </p>
         </div>
-        <div className='bg-[#3f52ff] hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm w-full sm:w-auto text-center'>
+        <div className='bg-[#3f52ff] hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm w-full sm:w-auto text-center transition-colors duration-200'>
           <NavLink to="/ongoing-IPO">View All</NavLink>
         </div>
       </div>
+
+      {error && (
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded">
+          <p>{error}</p>
+        </div>
+      )}
       
       <div className="relative">
-        {currentIndex > 0 && (
+        {currentIndex > 0 && !loading && ongoingIPOs.length > 0 && (
           <button 
             onClick={scrollLeft}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 hover:bg-gray-100"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 hover:bg-gray-100 transition-colors duration-200"
             aria-label="Scroll left"
           >
             <FaChevronLeft className="text-[#3f52ff]" size={20} />
           </button>
         )}
         
-        <div className={`grid ${windowWidth < 640 ? 'grid-cols-1' : windowWidth < 768 ? 'grid-cols-2' : 'grid-cols-3'} gap-4 overflow-x-auto pb-4 scrollbar-hide`}>
-          {visibleIPOs.map((ipo, index) => (
-            <div 
-              key={index} 
-              className="border border-gray-100 bg-white rounded-lg p-4 shadow-sm w-full"
-            >
-              <div className="flex flex-col h-full">
-                <div className="flex items-center gap-3 mb-4">
-                  {ipo.logo ? (
-                    <img
-                      src={ipo.logo}
-                      alt={`${ipo.name} logo`}
-                      className="w-12 h-10 object-contain"
-                    />
-                  ) : (
-                    <div className="w-12 h-10 bg-gray-200 rounded"></div>
-                  )}
-                  <h2 className="font-bold text-lg text-[#467CFF] truncate">{ipo.name}</h2>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-2 mb-4">
-                  <div>
-                    <p className="text-xs text-gray-500">PRICE BAND</p>
-                    <p className="font-medium text-sm">{ipo.priceBand}</p>
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+          {loading ? (
+            // Show skeleton loaders while loading
+            [...Array(visibleCards)].map((_, index) => (
+              <SkeletonLoader key={index} />
+            ))
+          ) : ongoingIPOs.length > 0 ? (
+            // Show actual IPO cards when data is loaded
+            visibleIPOs.map((ipo, index) => (
+              <div 
+                key={ipo.id || index} 
+                className="border border-gray-100 bg-white rounded-lg p-4 shadow-sm w-full hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    {ipo.logo ? (
+                      <img
+                        src={ipo.logo}
+                        alt={`${ipo.name} logo`}
+                        className="w-12 h-10 object-contain"
+                        onError={(e) => {
+                          e.target.src = '/default-ipo-logo.png';
+                          e.target.onerror = null;
+                        }}
+                      />
+                    ) : (
+                      <div className="w-12 h-10 bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-xs text-gray-500">No Logo</span>
+                      </div>
+                    )}
+                    <h2 className="font-bold text-lg text-[#467CFF] truncate">{ipo.name}</h2>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-500">OPEN</p>
-                    <p className="font-medium text-sm">{ipo.open}</p>
+                  
+                  <div className="grid grid-cols-3 gap-2 mb-4">
+                    <div>
+                      <p className="text-xs text-gray-500">PRICE BAND</p>
+                      <p className="font-medium text-sm">{ipo.priceBand || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">OPEN</p>
+                      <p className="font-medium text-sm">{formatDate(ipo.open)}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">CLOSE</p>
+                      <p className="font-medium text-sm">{formatDate(ipo.close)}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-500">CLOSE</p>
-                    <p className="font-medium text-sm">{ipo.close}</p>
+                  
+                  <div className="grid grid-cols-3 gap-2 mb-6">
+                    <div>
+                      <p className="text-xs text-gray-500">ISSUE SIZE</p>
+                      <p className="font-medium text-sm">{ipo.issueSize || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">ISSUE TYPE</p>
+                      <p className="font-medium text-sm">{ipo.issueType || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">LISTING DATE</p>
+                      <p className="font-medium text-sm">{formatDate(ipo.listingDate)}</p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-2 mb-6">
-                  <div>
-                    <p className="text-xs text-gray-500">ISSUE SIZE</p>
-                    <p className="font-medium text-sm">{ipo.issueSize}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">ISSUE TYPE</p>
-                    <p className="font-medium text-sm">{ipo.issueType}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">LISTING DATE</p>
-                    <p className="font-medium text-sm">{ipo.listingDate}</p>
-                  </div>
-                </div>
 
-                <div className='flex gap-2 mt-auto'>
-                  <NavLink 
-                    to='/RHP' 
-                    className="bg-[#E1EFFF] py-2 px-3 sm:px-4 rounded text-xs sm:text-sm text-center flex-1"
-                  >
-                    RHP
-                  </NavLink>
-                  <NavLink 
-                    to='/DRHP' 
-                    className="bg-[#E1EFFF] py-2 px-3 sm:px-4 rounded text-xs sm:text-sm text-center flex-1"
-                  >
-                    DRHP
-                  </NavLink>
+                  <div className='flex gap-2 mt-auto'>
+                    <NavLink 
+                      to={`/rhp/${ipo.id}`} 
+                      className="bg-[#E1EFFF] hover:bg-blue-100 py-2 px-3 sm:px-4 rounded text-xs sm:text-sm text-center flex-1 transition-colors duration-200"
+                    >
+                      RHP
+                    </NavLink>
+                    <NavLink 
+                      to={`/drhp/${ipo.id}`} 
+                      className="bg-[#E1EFFF] hover:bg-blue-100 py-2 px-3 sm:px-4 rounded text-xs sm:text-sm text-center flex-1 transition-colors duration-200"
+                    >
+                      DRHP
+                    </NavLink>
+                  </div>
                 </div>
               </div>
+            ))
+          ) : (
+            // Show empty state when no IPOs are available
+            <div className="w-full py-10 text-center">
+              <p className="text-gray-500">No ongoing IPOs at the moment. Please check back later.</p>
             </div>
-          ))}
+          )}
         </div>
         
-        {currentIndex < ongoingIPOs.length - visibleCards && (
+        {currentIndex < ongoingIPOs.length - visibleCards && !loading && ongoingIPOs.length > 0 && (
           <button 
             onClick={scrollRight}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 hover:bg-gray-100"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 hover:bg-gray-100 transition-colors duration-200"
             aria-label="Scroll right"
           >
             <FaChevronRight className="text-[#3f52ff]" size={20} />

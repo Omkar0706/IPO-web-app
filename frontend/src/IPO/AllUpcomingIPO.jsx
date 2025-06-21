@@ -1,113 +1,120 @@
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import { NavLink } from 'react-router-dom';
 import { FiPlus, FiMinus } from 'react-icons/fi';
+import axios from '../api/Axios';
 
 const AllUpcomingIPO = () => {
-  const upcomingIPOs = [
+  const [upcomingIPOs, setUpcomingIPOs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
+  
+  // Fetch IPO data from backend
+  useEffect(() => {
+    const fetchUpcomingIPOs = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('/ipos/upcoming');
+        setUpcomingIPOs(response.data);
+        setError(null);
+      } catch (err) {
+        console.error('Failed to fetch upcoming IPOs:', err);
+        setError('Failed to load IPO data. Please try again later.');
+        setUpcomingIPOs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUpcomingIPOs();
+  }, []);
+
+  const faqs = [
     {
-      name: "Nova Agritech Ltd.",
-      logo: "/nova_agritech.png",
-      priceBand: "₹39 - 41",
-      open: "2024-01-22",
-      close: "2024-01-24",
-      issueSize: "143.81 Cr.",
-      issueType: "Book Built",
-      listingDate: "2024-01-30",
-      rhp: "DRHP",
+      question: "How to Subscribe to an IPO?",
+      answer: "You can subscribe to an IPO through your bank's net banking portal, trading account, or via UPI using ASBA (Applications Supported by Blocked Amount) method."
     },
     {
-      name: "EPACK Durable Ltd.",
-      logo: "/EPACK_LTD.jpeg",
-      priceBand: "₹28 - 230",
-      open: "2024-01-19",
-      close: "2024-01-23",
-      issueSize: "640.05 Cr.",
-      issueType: "Book Built",
-      listingDate: "2024-01-29",
+      question: "Should I buy an IPO first day?",
+      answer: "The decision depends on market conditions and the company's fundamentals. Some investors prefer to wait and see the initial performance before investing."
     },
     {
-      name: "R K SWAMP RK Swarmy Ltd.",
-      logo: "/RKSWAMY.jpeg",
-      priceBand: "Not Issued",
-      open: "Not Issued",
-      close: "Not Issued",
-      issueSize: "Not Issued",
-      issueType: "Book Built",
-      listingDate: "Not Issued"
+      question: "How do you know if an IPO is good?",
+      answer: "Evaluate the company's financials, business model, growth prospects, valuation compared to peers, and the purpose of the IPO (whether funds are for growth or just investor exit)."
     },
     {
-      name: "Tech Innovations Ltd.",
-      logo: "/TechInnov.png",
-      priceBand: "₹50 - 55",
-      open: "2024-02-01",
-      close: "2024-02-05",
-      issueSize: "200.00 Cr.",
-      issueType: "Book Built",
-      listingDate: "2024-02-12"
+      question: "How to check IPO start date?",
+      answer: "IPO dates are published in the Red Herring Prospectus (RHP) and can be found on SEBI's website, stock exchange websites, or financial news portals."
     },
     {
-      name: "Green Energy Solutions",
-      logo: "/GreenEnergy.png",
-      priceBand: "₹75 - 80",
-      open: "2024-02-10",
-      close: "2024-02-14",
-      issueSize: "350.50 Cr.",
-      issueType: "Book Built",
-      listingDate: "2024-02-21"
+      question: "What is issue size?",
+      answer: "Issue size refers to the total value of shares being offered in the IPO, calculated as the number of shares multiplied by the price band."
+    },
+    {
+      question: "How many shares in a lot?",
+      answer: "The lot size varies for each IPO and is specified in the prospectus. It represents the minimum number of shares you can bid for in the IPO."
+    },
+    {
+      question: "How is the lot size calculated?",
+      answer: "Lot size is determined by the company and its bankers to ensure retail investors can participate while maintaining orderly market operations."
+    },
+    {
+      question: "Who decides the IPO price band?",
+      answer: "The price band is decided by the company in consultation with its merchant bankers based on valuation parameters and market conditions."
+    },
+    {
+      question: "What is IPO GMP?",
+      answer: "GMP (Grey Market Premium) is the premium at which IPO shares are traded in the grey market before listing, indicating investor demand."
     }
   ];
 
-  const [activeIndex, setActiveIndex] = useState(null);
-  
-    const faqs = [
-      {
-        question: "How to Subscribe to an IPO?",
-        answer: ""
-      },
-      {
-        question: "Should I buy an IPO first day?",
-        answer: ""
-      },
-      {
-        question: "How do you know if an IPO is good?",
-        answer: ""
-      },
-      {
-        question: "How to check IPO start date?",
-        answer: ""
-      },
-      {
-        question: "What is issue size?",
-        answer: ""
-      },
-      {
-        question: "How many shares in a lot?",
-        answer: ""
-      },
-      {
-        question: "How is the lot size calculated?",
-        answer: ""
-      },
-      {
-        question: "Who decides the IPO price band?",
-        answer: ""
-      },
-      {
-        question: "What is IPO GMP?",
-        answer: ""
-      }
-    ];
-  
-    const toggleFAQ = (index) => {
-      setActiveIndex(activeIndex === index ? null : index);
-    };
+  const toggleFAQ = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
   const formatDate = (dateString) => {
-    if (dateString === "Not Issued") return dateString;
+    if (!dateString || dateString === "Not Issued") return dateString;
     const date = new Date(dateString);
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
   };
+
+  // Skeleton loader for IPO cards
+  const SkeletonIPOCard = () => (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
+      <div className="p-5">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-14 h-14 bg-gray-200 rounded-lg"></div>
+          <div className="h-5 bg-gray-200 rounded w-3/4"></div>
+        </div>
+        
+        <div className="space-y-4">
+          <div className="grid grid-cols-3 gap-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i}>
+                <div className="h-3 bg-gray-200 rounded w-3/4 mb-1"></div>
+                <div className="h-4 bg-gray-200 rounded w-full"></div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="grid grid-cols-3 gap-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i}>
+                <div className="h-3 bg-gray-200 rounded w-3/4 mb-1"></div>
+                <div className="h-4 bg-gray-200 rounded w-full"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className='flex gap-3 mt-6'>
+          <div className="bg-gray-200 h-9 rounded-lg w-1/2"></div>
+          <div className="bg-gray-200 h-9 rounded-lg w-1/2"></div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -115,7 +122,7 @@ const AllUpcomingIPO = () => {
       <div className='px-4 md:px-10 py-6'>
         {/* Breadcrumb */}
         <div className='flex flex-wrap gap-2 my-3 text-sm'>
-          <h1 className='text-[#0000ff] hover:underline'>Bluestock</h1>
+          <NavLink to="/" className='text-[#0000ff] hover:underline'>Bluestock</NavLink>
           <span>{'>'}</span>
           <NavLink to="/" className='text-[#0000ff] hover:underline'>IPO</NavLink>
           <span>{'>'}</span>
@@ -130,101 +137,133 @@ const AllUpcomingIPO = () => {
           </p>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded">
+            <p>{error}</p>
+          </div>
+        )}
+
         {/* IPO Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {upcomingIPOs.map((ipo, index) => (
-            <div 
-              key={index} 
-              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden"
-            >
-              <div className="p-5">
-                {/* Company Header */}
-                <div className="flex items-center gap-4 mb-6">
-                  {ipo.logo ? (
-                    <img
-                      src={ipo.logo}
-                      alt={`${ipo.name} logo`}
-                      className="w-14 h-14 object-contain rounded-lg border border-gray-200 p-1"
-                    />
-                  ) : (
-                    <div className="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center">
-                      <span className="text-gray-400 text-xs">No Logo</span>
+          {loading ? (
+            // Show skeleton loaders while loading
+            [...Array(6)].map((_, index) => (
+              <SkeletonIPOCard key={index} />
+            ))
+          ) : (
+            // Show actual IPO cards when data is loaded
+            upcomingIPOs.map((ipo, index) => (
+              <div 
+                key={ipo.id || index} 
+                className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden"
+              >
+                <div className="p-5">
+                  {/* Company Header */}
+                  <div className="flex items-center gap-4 mb-6">
+                    {ipo.logo ? (
+                      <img
+                        src={ipo.logo}
+                        alt={`${ipo.name} logo`}
+                        className="w-14 h-14 object-contain rounded-lg border border-gray-200 p-1"
+                        onError={(e) => {
+                          e.target.src = '/default-ipo-logo.png';
+                          e.target.onerror = null;
+                        }}
+                      />
+                    ) : (
+                      <div className="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <span className="text-gray-400 text-xs">No Logo</span>
+                      </div>
+                    )}
+                    <h2 className="font-bold text-lg text-gray-800">{ipo.name}</h2>
+                  </div>
+                  
+                  {/* IPO Details */}
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-3 gap-4">
+                      <div>
+                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Price Band</p>
+                        <p className="font-semibold text-gray-800 mt-1">{ipo.priceBand || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Issue Size</p>
+                        <p className="font-semibold text-gray-800 mt-1">{ipo.issueSize || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Open Date</p>
+                        <p className="font-semibold text-gray-800 mt-1">{formatDate(ipo.open)}</p>
+                      </div>
                     </div>
-                  )}
-                  <h2 className="font-bold text-lg text-gray-800">{ipo.name}</h2>
-                </div>
-                
-                {/* IPO Details */}
-                <div className="space-y-4">
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Price Band</p>
-                      <p className="font-semibold text-gray-800 mt-1">{ipo.priceBand}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Issue Size</p>
-                      <p className="font-semibold text-gray-800 mt-1">{ipo.issueSize}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Open Date</p>
-                      <p className="font-semibold text-gray-800 mt-1">{formatDate(ipo.open)}</p>
+                    
+                    <div className="grid grid-cols-3 gap-4">
+                      <div>
+                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Close Date</p>
+                        <p className="font-semibold text-gray-800 mt-1">{formatDate(ipo.close)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Issue Type</p>
+                        <p className="font-semibold text-gray-800 mt-1">{ipo.issueType || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Listing Date</p>
+                        <p className="font-semibold text-gray-800 mt-1">{formatDate(ipo.listingDate)}</p>
+                      </div>
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Close Date</p>
-                      <p className="font-semibold text-gray-800 mt-1">{formatDate(ipo.close)}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Issue Type</p>
-                      <p className="font-semibold text-gray-800 mt-1">{ipo.issueType}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Listing Date</p>
-                      <p className="font-semibold text-gray-800 mt-1">{formatDate(ipo.listingDate)}</p>
-                    </div>
+                  {/* Action Buttons */}
+                  <div className='flex gap-3 mt-6'>
+                    <NavLink 
+                      to={`/rhp/${ipo.id}`} 
+                      className="bg-blue-50 text-[#0000ff] hover:bg-blue-100 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+                    >
+                      View RHP
+                    </NavLink>
+                    <NavLink 
+                      to={`/drhp/${ipo.id}`} 
+                      className="bg-blue-50 text-[#0000ff] hover:bg-blue-100 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+                    >
+                      View DRHP
+                    </NavLink>
                   </div>
                 </div>
-                
-                {/* Action Buttons */}
-                <div className='flex gap-3 mt-6'>
-                  <NavLink 
-                    to='/RHP' 
-                    className="bg-blue-50 text-[#0000ff] hover:bg-blue-100 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
-                  >
-                    View RHP
-                  </NavLink>
-                  <NavLink 
-                    to='/DRHP' 
-                    className="bg-blue-50 text-[#0000ff] hover:bg-blue-100 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
-                  >
-                    View DRHP
-                  </NavLink>
-                </div>
               </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* FAQ Section */}
+      <div className='py-14 px-4 md:px-10 bg-gray-50'>
+        <h1 className='text-2xl md:text-3xl font-bold text-gray-800'>Frequently Asked Questions</h1>
+        <p className='text-sm text-gray-600 mb-8'>Find answers to common questions that come in your mind related to IPO.</p>
+
+        <div className='space-y-4'>
+          {faqs.map((faq, index) => (
+            <div key={index} className='bg-white p-4 rounded-lg shadow-sm border border-gray-100 transition-all duration-200'>
+              <div 
+                className='flex items-center justify-between cursor-pointer py-2'
+                onClick={() => toggleFAQ(index)}
+                aria-expanded={activeIndex === index}
+                aria-controls={`faq-answer-${index}`}
+              >
+                <h2 className='text-base md:text-lg font-semibold text-gray-800'>{faq.question}</h2>
+                {activeIndex === index ? 
+                  <FiMinus className='text-xl text-[#1740aa]' /> : 
+                  <FiPlus className='text-xl text-[#5c8bfe]' />
+                }
+              </div>
+
+              {activeIndex === index && (
+                <div id={`faq-answer-${index}`} className='text-gray-600 mt-2 pl-1'>
+                  {faq.answer}
+                </div>
+              )}
             </div>
           ))}
         </div>
       </div>
-
-        <div className='py-14 px-10'>
-            <h1 className='text-3xl font-bold'>Frequently Asked Questions?</h1>
-            <p className='text-sm font-thin mb-8'>Find answers to common questions that come in your mind related to IPO.</p>
-
-            <div className='space-y-4'>
-                {faqs.map((faq, index) => (
-                <div key={index} className='bg-[#F4F3F9] p-4 rounded-lg shadow-md'>
-                    <div className='flex items-center justify-between cursor-pointer py-2' onClick={() => toggleFAQ(index)}>
-                        <h2 className='text-lg font-semibold text-black'>{faq.question}</h2>
-                        {activeIndex === index ? <FiMinus className='text-xl text-[#1740aa]' /> : <FiPlus className='text-xl text-[#5c8bfe]' />}
-                    </div>
-
-                    {activeIndex === index && (<p className='text-gray-600 mt-2'>{faq.answer}</p>)}
-                </div>
-                ))}
-            </div>
-        </div>
     </>
   )
 }

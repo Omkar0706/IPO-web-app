@@ -1,0 +1,4 @@
+ipo_app/
+├── management/
+│   ├── commands/
+│   │   └── seed_ipo_data.py
