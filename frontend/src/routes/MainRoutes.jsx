@@ -33,7 +33,6 @@ const MainRoutes = () => {
         <Route path="/newlisted-IPO" element={<AllNewListedIPO />} />
         <Route path="*" element={<Pagenotfound />} />
         <Route path="/demat-account" element={<DematAccountPage />} />
-
       </Routes>
     </>
   )

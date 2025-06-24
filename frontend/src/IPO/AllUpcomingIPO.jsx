@@ -69,52 +69,6 @@ const AllUpcomingIPO = () => {
     }
   ];
 
-  const toggleFAQ = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
-    fetchIPOs();
-  }, []);
-
-const faqs = [
-  {
-    question: "How to Subscribe to an IPO?",
-    answer: "You can subscribe to an IPO through your broker’s trading platform or via UPI-supported apps by submitting a bid application during the open IPO window."
-  },
-  {
-    question: "Should I buy an IPO first day?",
-    answer: "Buying on the first day depends on your risk appetite. Some IPOs get heavily subscribed and list at a premium, while others may not perform well. Always analyze fundamentals before investing."
-  },
-  {
-    question: "How do you know if an IPO is good?",
-    answer: "A good IPO usually has strong financials, a solid business model, industry potential, and fair pricing. Check the DRHP, company profits, and grey market premium (GMP) before deciding."
-  },
-  {
-    question: "How to check IPO start date?",
-    answer: "IPO start dates are available on official stock exchange websites like NSE/BSE, or through your broker’s IPO section. It's also published in financial news portals and the company's RHP."
-  },
-  {
-    question: "What is issue size?",
-    answer: "Issue size refers to the total value of shares being offered by the company during the IPO. It’s calculated by multiplying the total number of shares by the price per share."
-  },
-  {
-    question: "How many shares in a lot?",
-    answer: "The number of shares in a lot varies per IPO and is defined by the company. Typically, one lot can have 10 to 100+ shares, and retail investors must bid in whole lots."
-  },
-  {
-    question: "How is the lot size calculated?",
-    answer: "Lot size is determined by the company and SEBI to maintain a minimum investment threshold (often ₹14,000–₹15,000). It is calculated by dividing that amount by the IPO price."
-  },
-  {
-    question: "Who decides the IPO price band?",
-    answer: "The IPO price band is decided by the company and its book-running lead managers (BRLMs), based on market conditions, valuations, and investor interest."
-  },
-  {
-    question: "What is IPO GMP?",
-    answer: "IPO GMP (Grey Market Premium) is the premium at which IPO shares are traded unofficially before listing. It indicates investor sentiment but is not an official or guaranteed price."
-  }
-];
-
 
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index);

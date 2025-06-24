@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const AdminNavbar = () => {
   return (
     <>
-      <div className='w-[16%] bg-[#f1f2f7] h-screen'>
+      <div className='w-[16%] bg-[#f1f2f7] min-h-screen'>
         <div className='h-16 py-4 text-center'>
             <h1 className='text-[#5a67ba] text-xl font-bold '>Bluestock Fintech</h1>
         </div>
