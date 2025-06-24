@@ -11,6 +11,9 @@ import RegisterIPO from '../IPO/RegisterIPO'
 import IPO_Subscription from '../IPO/IPO_Subscription'
 import IPO_Allotment from '../IPO/IPO_Allotment'
 import AllUpcomingIPO from '../IPO/AllUpcomingIPO'
+import AllOngoingIPO from '../IPO/AllOngoingIPO';
+import AllNewListedIPO from '../IPO/AllNewListedIPO'; 
+import DematAccountPage from '../pages/DematAccountPage'
 
 const MainRoutes = () => {
   return (
@@ -26,7 +29,11 @@ const MainRoutes = () => {
         <Route path='/admin/IPO_Subscription'element={<IPO_Subscription/>}/>
         <Route path='/admin/IPO_Allotment' element={<IPO_Allotment/>}/>
         <Route path='/upcoming-IPO' element={<AllUpcomingIPO/>}/>
+        <Route path="/ongoing-IPO" element={<AllOngoingIPO />} />
+        <Route path="/newlisted-IPO" element={<AllNewListedIPO />} />
         <Route path="*" element={<Pagenotfound />} />
+        <Route path="/demat-account" element={<DematAccountPage />} />
+
       </Routes>
     </>
   )
